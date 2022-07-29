@@ -8,6 +8,7 @@ const cors = require('cors')
 // 将 cors 注册为全局中间件
 app.use(cors())
 
+
 // 配置解析表单数据的中间件
 // 注意：这个中间件，只能解析 application/x-www-form-urlencoded 这种格式的表单数据
 app.use(express.urlencoded({ extended: false }))
