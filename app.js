@@ -8,10 +8,23 @@ const cors = require('cors')
 // 将 cors 注册为全局中间件
 app.use(cors())
 
-
 // 配置解析表单数据的中间件
 // 注意：这个中间件，只能解析 application/x-www-form-urlencoded 这种格式的表单数据
 app.use(express.urlencoded({ extended: false }))
+
+// 注意：一定要在路由之前，封装 res.cc 函数
+app.use((req, res, next) => {
+    // status 默认值为 1， 表示失败的情况
+    // err 的值， 可能是一个错误对象， 也可能是一个错误的描述字符串
+    res.cc = function (err, status = 1) {
+        res.send({
+            status,
+            message: err instanceof Error ? err.message : err,
+        })
+    }
+
+    next()
+})
 
 // 导入并注册用户路由模块
 const userRouter = require('./router/user')
